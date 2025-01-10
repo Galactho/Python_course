@@ -1,0 +1,36 @@
+#! python
+
+# Text processor
+# 1 How many times the input letter appears on input text
+# 2 How many words compose the input text
+# 3 The first and last letters
+# 4 Text words in reverse order
+# 5 Is the word 'python' on text?
+
+# Asking for input data
+text = input("Write your text to process: ")
+letter1 = input("Write the first letter: ")
+letter2 = input("Write the second letter: ")
+letter3 = input("Write the third letter: ")
+
+# First task
+my_list = list(text.lower()) #Casting string to list
+print(f"The letter {letter1} appears on the text {my_list.count(letter1)} times") #Using methd 'count' with argument the letter that gives me an integer
+print(f"The letter {letter2} appears on the text {my_list.count(letter2)} times")
+print(f"The letter {letter3} appears on the text {my_list.count(letter3)} times")
+
+# Second task
+list_num_words = my_list.count(" ") + 1 #Here I´m counting the number of blank spaces on my list plus 1, so that give me the number of words
+print(f"The total number of words on text is: {list_num_words}")
+
+# Third task
+print(f"The first letter on text is {my_list[0]} and the last is {my_list[-1]}") #Using my list indexes, Im printing the first element and tthe last starting the count in reverse
+
+# Fourth task
+list_splitted = text.split(" ") #Using split method I did separate all words between blank spaces
+list_splitted.reverse() #Now with reverse method the list is in invert order
+print("The text invert order is: " + " ".join(list_splitted)) #With join method the elements from list create 1 string separeted by blank spaces
+
+# Fifth task
+my_dic = {True:'The text have the python word on it',False:'The text does not have the python word on it'} #Dictionary with the options to choose after validation
+print(dic['python' in list_splitted]) #Prints the result of the validation with operator *in* wich returns boolean value
