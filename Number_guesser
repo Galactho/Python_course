@@ -1,0 +1,24 @@
+#! python
+
+from random import randint
+
+trys = 0
+print('NUMBER GUESSER')
+name = input('What\'s your name? ')
+print(f'''Welcome {name}. 
+I have a number between 0 and 100, can you guess it?''')
+secret_num = randint(1,100)
+while trys < 8:
+    num = int(input('Write a number: '))
+    intentos += 1
+    if num < 0 or num > 100:
+        print('The number is out of range')
+    elif num < secret_num:
+        print('The number is lower tha secret')
+    elif num > num_secreto:
+        print('The number is higher than secret')
+    elif num == secret_num:
+        print(f'Youn win {name}! You guess it at {trys} trys')
+        break
+if num != secret_num:
+    print(f'You lose. You\'re aout of trys, the secret number was {secret_num}')
