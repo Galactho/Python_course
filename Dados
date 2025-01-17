@@ -1,0 +1,33 @@
+#! python
+
+from random import randint
+
+def lanzar_dados():
+    '''
+    Esta funcion selecciona al azar 2 numeros del 1 al 6
+    '''
+    valor_1 = 0
+    valor_2 = 0
+    valor_1 = randint(1,6)
+    valor_2 = randint(1,6)
+    return valor_1, valor_2
+
+def evaluar_jugada(valor_1,valor_2):
+    '''
+    Esta funcion recibe 2 valores y devuelve mensaje
+    dependiendo del resultado de sumar los argumentos
+    '''
+    if valor_1 + valor_2 <= 6:
+        return f'''La suma de tus dados es {valor_1 + valor_2}.
+        Lamentable'''
+    elif valor_1 + valor_2 > 6 and valor_1 + valor_2 < 10:
+        return f'''La suma de tus dados es {valor_1 + valor_2}.
+        Tienes buenas chances'''
+    elif valor_1 + valor_2 >= 10:
+        return f'''La suma de tus dados es {valor_1 + valor_2}.
+        Parece una jugada ganadora'''
+
+print('EL JUEGO DE LOS DADOS')
+valor_1, valor_2 = lanzar_dados()
+print(f'Tus dados fueron {valor_1} y {valor_2}')
+print(evaluar_jugada(valor_1,valor_2))
