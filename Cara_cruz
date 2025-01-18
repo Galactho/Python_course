@@ -1,0 +1,30 @@
+#! python
+
+from random import choice
+
+lista_numeros = [1,2,3,4,5]
+
+def lanzar_moneda():
+    '''
+    Esta funcion devuelve un valor
+    elegido al azar entre las dos caras de una moneda
+    '''
+    value = ['Cara','Cruz']
+    return choice(value)
+
+def probar_suerte(moneda, lista):
+    '''
+    Esta funcion recibe 2 argumentos
+    El resultado de la funcion lanzar_moneda y una lista
+    Si la moneda es igual a cara, devuelve la lista limpia
+    Si la moneda es igual a cruz, devuleve la lista intacta
+    '''
+    if moneda == 'Cara':
+        print('La lista se autodestruirá.')
+        lista.clear()
+        return lista
+    elif moneda == 'Cruz':
+        print('La lista fue salvada.')
+        return lista
+        
+print(probar_suerte(lanzar_moneda(),lista_numeros))
