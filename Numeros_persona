@@ -1,0 +1,15 @@
+#! python
+
+def persona_numeros(nombre,*numeros):
+    '''
+    Esta funcion puede recibir muchos argumentos
+    El primero quiero que sea un string
+    El resto, se suman y se devuelven concatenados
+    '''
+    suma = 0
+    print(nombre)
+    for numero in numeros:
+        suma += numero
+    return f'{nombre}, la suma de tus números es {suma}'
+
+print(persona_numeros('Fernando',1,2,3,4))
