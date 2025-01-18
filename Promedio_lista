@@ -1,0 +1,30 @@
+#! python
+
+lista_numeros = [1,10,8,8,5]
+
+def reducir_lista(lista_numeros):
+    '''
+    Esta funcion recibe una lista como arguento
+    Elimina los avalores repetidos
+    Elimina el valor mayor
+    Devuelve la lista modificada
+    '''
+    lista = []
+    for numero in lista_numeros:
+        if numero not in lista:
+            lista.append(numero)
+    lista.remove(max(lista))
+    return lista
+
+def promedio(lista):
+    '''
+    Esta funcion recibe una lista
+    Calcula el promedio de los valores en la lista
+    Devuelve el resultado del promedio
+    '''
+    suma = 0
+    for numero in lista:
+        suma += numero
+    return suma / len(lista)
+    
+print(promedio(reducir_lista(lista_numeros)))
