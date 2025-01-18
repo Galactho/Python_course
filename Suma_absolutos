@@ -1,0 +1,13 @@
+#! python
+
+def suma_absolutos(*args):
+    '''
+    Esta funcion puede recibir cualquier cantidad de 
+    argumentos para despues sumarlos en su forma absoluta
+    sin importar su signo
+    '''
+    suma = 0
+    for arg in args:
+        suma += abs(arg)
+    return suma
+print(suma_absolutos(10,-8,3,-5))
