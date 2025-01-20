@@ -1,0 +1,17 @@
+#! python
+
+def cero_consecutivo(*args):
+    '''
+    Esta funcion puede recibir varios argumentos
+    Si detecta que se ingresaron 2 ceros seguidos
+    Devuelve True
+    Sino, devuelve False
+    '''
+    cuenta = 0
+    for numero in args:
+        if numero == 0 and numero == args[cuenta-1]:
+            return True
+        cuenta += 1
+    return False
+            
+print(cero_consecutivo(10,2,3,4,0,0,78))
