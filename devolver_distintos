@@ -1,0 +1,21 @@
+#! python
+
+def devolver_distintos(num_1,num_2,num_3):
+    '''
+    Esta funcion recibe tres argumentos
+    Devuelve el mayor si la suma de los 3 es mayor a 15
+    Devuelve el menor si la suma de los 3 es menor a 10
+    Devuelve el intermedio si la suma de los 3 esta entre 15 y 10
+    '''
+    lista = [num_1,num_2,num_3]
+    suma = num_1 + num_2 + num_3
+    if suma > 15:
+        return max(lista)
+    elif suma < 10:
+        return min(lista)
+    elif suma >= 10 and suma <=15:
+        lista.remove(max(lista))
+        lista.remove(min(lista))
+        return lista[0]
+
+print(devolver_distintos(8,1,3))
