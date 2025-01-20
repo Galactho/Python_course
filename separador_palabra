@@ -1,0 +1,16 @@
+#! python
+
+def separador_palabra(palabra):
+    '''
+    Esta funcion va recibir una palabra como argumento
+    Va devolver cada una de sus palabras unicas sin repetir
+    y en orden alfabetico
+    '''
+    lista = []
+    for letra in palabra:
+        if letra not in lista:
+            lista.append(letra)
+    lista.sort()
+    return lista
+    
+print(separador_palabra('abecedario'))
