@@ -1,0 +1,23 @@
+#! python
+
+def numeros_primos(numero):
+    '''
+    Esta funcion recibe un numero como argumento
+    Va calcular, desde el 0 hasta ese numero
+    cuantos numeros primos hay para devolver el total
+    '''
+    contador_primos = [2]
+    iteracion = 3
+    if numero < 2:
+        return 0
+    while iteracion <= numero:
+        for n in range(3,iteracion,2):
+            if iteracion % n == 0:
+                iteracion += 2
+                break
+        else:
+            contador_primos.append(iteracion)
+            iteracion += 2
+    print(contador_primos)
+    return len(contador_primos)
+print(numeros_primos(50))
