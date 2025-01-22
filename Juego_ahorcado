@@ -1,35 +1,9 @@
 #! python
 
 from random import choice
+import sys
 
-'''
-EL JUEGO DEL AHORCADO
-- El programa va elegir una palabra secreta
-- Mostrara una serie de guiones por cada letra de la palabra
-- Si el jugador dice una letra, el programa reemplaza
-el guion por la letra si la palabra la contiene
-- Se tendran 6 vidas antes de perder para adivinar la palabra
-- Importar el metodo choice
-- Crear funciones para cada proceso por separado
-    pedir letra
-    validar letra
-    chequear letra
-    ver si gano
-- Escribir primero als funciones y luego el codigo que
-las implementa
-
-
-- Para la seleccion de la palabra se usara un diccionario
-predefinido con ciertos valores por selecionar
-- La salida de la funcion que seleccione la palabra sera
-la entrada de la funcion que pida la letra
-
-
-- Funcion para elegir una palabra
-- Funcion para preguntar y comprobar letra
-- Funcion para mostrar letra en palabra
-- Funcion para comprobar si gano
-'''
+vidas = 6
 palabra_secreta = ''
 palabra_oculta = ''
 
@@ -51,33 +25,54 @@ def ocultar_palabra(palabra):
     print(palabra)
     for letra in palabra:
         palabra_oculta += '_'    
-    return palabra_oculta
+    return palabra_oculta        
     
-def comprobar_letra(letra,palabra_secreta,palabra_oculta):
+def validar_letra(letra):
     '''
-    Esta funcion recibe 3 argumentos
-    - La letra que ingresa el usuario
-    - La palabra al azar
-    - La palabra oculta
-    Verrifica si la letra ingresada se encuentra en la palabra
-    Si es asi, reemplaza en la palabra oculta las letras
+    Esta funcion procesa la letra que ingresa el usuario
+    Si la letra no se encuentra en el abecedario
+    vuelve a pedir otra letra
+    Si la letra ingresada esta en el abecedario, devuelve letra
     '''
-    cuenta = 0
-    for n in palabra_secreta:
-        if letra != n:
-            cuenta += 1
-            pass
-        elif letra == n:
-            palabra_guion = palabra_oculta.replace('_',n)
-            cuenta += 1
-        else:
-            cuenta += 1
-    return palabra_guion
-
-print('EL JUEGO DEL AHORCADO')
-palabra_secreta = seleccionar_palabra()
-palabra_oculta = ocultar_palabra(palabra_secreta)
-print(f'''Cuentas con 6 vidas para adivinar qué palabra es esta: 
-{palabra_oculta}''')
-letra = str(input('Ingresa una letra: '))
-print(comprobar_letra(letra,palabra_secreta,palabra_oculta))
+    abecedario = [chr(i) for i in range(ord('a'), ord('z') + 1)]
+    if letra not in abecedario:
+        print('Caracter no válido.')
+        return False
+    else:
+        return True
+    
+def comprobar_letra(letra):
+    '''
+    Esta funcion va comprobar si la letra ingresada
+    por el usuario se encuentra en la palabra secreta
+    '''
+    letras_equivocadas = []
+    palabra = palabra_secreta
+    if letra not in palabra_secreta:
+        letras_equivocadas.append(letra)
+        vidas -= 1
+        print(f'''Te equivocaste.
+            {letras_equivocadas}
+            Te quedan {vidas} vidas.''')
+    else:
+        for n in palabra_secreta:
+            if n != letra:
+                palabra.replace(n,'_')
+        return palabra
+        
+while True:
+    print('EL JUEGO DEL AHORCADO')
+    palabra_secreta = seleccionar_palabra()
+    palabra_oculta = ocultar_palabra(palabra_secreta)
+    print(f'''Cuentas con 6 vidas para adivinar qué palabra es esta: 
+    {palabra_oculta}''')
+    while vidas >= 1:
+        letra = input('Introduce una letra: ')
+        while validar_letra(letra):
+            comprobar_letra(letra)
+            break
+        # print(comprobar_letra(validar_letra()))
+        
+#for n in palabra:
+#     if letra != n:
+#         palabra = palabra.replace(n,'_')
