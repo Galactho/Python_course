@@ -1,0 +1,90 @@
+#! python
+
+from pathlib import Path, PureWindowsPath
+import os
+from os import system
+
+archivo_prueba2 = open('C:\\Users\\FERNANDOSANCHEZGONZA\\Desktop\\otro_directorio\\prueba2.txt','w')
+archivo_prueba2.write('Este archivo se ubica en \\otro_directorio\\prueba2.txt')
+archivo_prueba2.close()
+
+archivo_prueba2 = open('C:\\Users\\FERNANDOSANCHEZGONZA\\Desktop\\otro_directorio\\prueba2.txt')
+print(archivo_prueba2.read())
+archivo_prueba2.close()
+
+archivo_prueba3 = open('C:\\Users\\FERNANDOSANCHEZGONZA\\Desktop\\otro_directorio\\otra\\prueba3.txt','w')
+archivo_prueba3.write('Este archivo se ubica en \\otro_directorio\\otra\\prueba3.txt')
+archivo_prueba3.close()
+
+archivo_prueba3 = open('C:\\Users\\FERNANDOSANCHEZGONZA\\Desktop\\otro_directorio\\otra\\prueba3.txt','r')
+print(archivo_prueba3.read())
+archivo_prueba3.close()
+
+ruta = os.getcwd()
+print(ruta)
+ruta = os.chdir('C:\\Users\\FERNANDOSANCHEZGONZA\\Desktop\\otro_directorio')
+archivo_prueba2 = open('prueba2.txt','r')
+ruta = os.getcwd()
+print(archivo_prueba2.read())
+
+ruta = os.mkdir('C:\\Users\\FERNANDOSANCHEZGONZA\\Desktop\\otro_directorio\\otra_carpeta') #This runs only one time
+ruta = os.chdir('C:\\Users\\FERNANDOSANCHEZGONZA\\Desktop\\otro_directorio\\otra_carpeta')
+ruta = os.getcwd()
+print(ruta)
+ruta = os.chdir('C:\\Users\\FERNANDOSANCHEZGONZA\\Desktop\\otro_directorio')
+ruta = os.getcwd()
+print(ruta)
+
+ruta = 'C:\\Users\\FERNANDOSANCHEZGONZA\\Desktop\\otro_directorio\\prueba2.txt'
+basename = os.path.basename(ruta)
+print(basename)
+dirname = os.path.dirname(ruta)
+print(dirname)
+
+splitted = os.path.split(ruta)
+print(splitted)
+
+ruta = os.rmdir('C:\\Users\\FERNANDOSANCHEZGONZA\\Desktop\\otro_directorio\\otra_carpeta') #This can also run one time
+
+carpeta = Path('C:/Users/FERNANDOSANCHEZGONZA/Desktop/otro_directorio')
+archivo = carpeta / 'prueba2.txt'
+archivo = open(archivo,'a')
+print(archivo.write('\nEscribiendo desde otra forma de abrir un archivo'))
+archivo.close()
+archivo = carpeta / 'prueba2.txt'
+archivo = open(archivo,'r')
+print(archivo.read())
+archivo.close()
+
+archivo = carpeta / 'prueba2.txt'
+print(archivo.read_text())
+print(archivo.name)
+print(archivo.suffix)
+print(archivo.stem)
+print(type(archivo.name))
+print(archivo.exists())
+ruta_windows = PureWindowsPath(carpeta)
+print(ruta_windows)
+
+base = Path.home()
+guia = Path(base,'Europa','España',Path('Barcelona','Sagrada_Familia.txt'))
+print(base)
+print(guia)
+#print(guia.parent.parent.parent)
+#guia2 = guia.with_name('La_Pedrera')
+#print(guia2)
+
+#home = Path.home()
+
+for txt in Path(Path.home(),'Desktop').glob('**/*.txt'):
+    print(txt)
+    
+guia = Path('Europa','España','Barcelona','Sagrada_Familia.txt')
+es_desktop = guia.relative_to(Path('Europa'))
+es_desktop = guia.relative_to(Path('Europa','España'))
+print(es_desktop)
+
+nombre = input('Dime tu nombre: ')
+edad = input('Dime tu edad: ')
+system('cls')
+print(f'Tu nombre es {nombre} y tu edad es {edad} años')
