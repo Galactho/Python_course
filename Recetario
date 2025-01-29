@@ -1,0 +1,98 @@
+#! python
+
+from pathlib import Path, PureWindowsPath
+import os
+from os import system
+
+def abrir_leer(ruta):
+    archivo = open(ruta,'r')
+    texto_archivo = archivo.read()
+    archivo.close()
+    return texto_archivo
+    
+def sobrescribir(ruta,texto):
+    archivo = open(ruta,'w')
+    archivo.write(texto)
+    archivo.close()
+    
+def escribir(ruta,texto):
+    archivo = open(ruta,'a')
+    archivo.write('\n' + texto)
+    archivo.close()
+    
+def crear_carpeta(ruta,nombre_carpeta):
+    carpeta = os.mkdir(ruta/nombre_carpeta)
+    
+def crear_archivo(ruta,nombre_archivo):
+    archivo = Path.touch(ruta/nombre_archivo)
+
+def cambiar_carpeta(ruta):
+    ruta = Path(ruta)
+    #print(ruta)
+    carpeta = os.chdir(ruta)
+    #print(carpeta)
+    return carpeta
+    
+def elegir_categoria():
+    cat = 0
+    cuenta = 0
+    for dir in Path(ruta).glob('*'):
+        cuenta += 1
+        print(f'[{cuenta}] : ',dir.stem)
+    while cat != range(1,4):
+        cat = int(input('Elige una categoria: '))
+        match cat:
+            case 1:
+                os.system('cls')
+                return ruta/'Carnes'
+            case 2:
+                os.system('cls')
+                return Path(ruta/'Ensaladas')
+            case 3:
+                os.system('cls')
+                return Path(ruta/'Pastas')
+            case 4:
+                os.system('cls')
+                return Path(ruta/'Postres')
+            case _:
+                print('No esta la opcion seleccionada')
+
+def elegir_archivo(ruta):
+    cuenta = 0
+    ruta = Path(ruta)
+    archive = []
+    for txt in ruta.glob('*.txt'):
+        cuenta += 1
+        archive.append([txt])
+        print(f'[{cuenta}] : ',txt.stem)
+    while len(archive) > 0:
+        eleccion = int(input('Elige una receta: '))
+        if eleccion in range(0,cuenta):
+            print(archive[eleccion])
+            return archive[eleccion]
+        else:
+            print('No esta la opcion seleccionada')
+    return print('Esta categoria está vacía')
+    
+ruta = Path('C:\\Users\\FERNANDOSANCHEZGONZA\\Recetas')
+#ruta_home = Path.home()
+#crear_carpeta(ruta,'Postres')
+#crear_archivo(ruta,'Tarta_de_Fambruesa.txt')
+#sobrescribir(ruta/'Tarta_de_Fambruesa.txt','Esta receta es de la Tarta de Fambruesa')
+#print(abrir_leer(ruta/'Tarta_de_Fambruesa.txt'))
+cambiar_carpeta(elegir_categoria())
+elegir_archivo(os.getcwd())
+#print(os.getcwd())
+#print(elegir_archivo())
+#print(os.getcwd())
+
+#ruta = Path('C:\\Users\\FERNANDOSANCHEZGONZA\\Desktop\\otro_directorio\\prueba2.txt')
+#print(abrir_leer(ruta))
+#sobrescribir(ruta,'Este texto es nuevo')
+#print(abrir_leer(ruta))
+#escribir(ruta,'Este texto se va agregar a la ultima linea')
+#print(abrir_leer(ruta))
+#sobrescribir(ruta,'Este texto va reemplazar todo el texto del archivo')
+#print(abrir_leer(ruta))
+#print(ruta.name)
+#os.system('cls')
