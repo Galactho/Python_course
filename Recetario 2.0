@@ -1,0 +1,218 @@
+#! python
+
+from pathlib import Path, PureWindowsPath
+import os
+from os import system
+import sys
+
+def abrir_leer(ruta):
+    '''
+    Esta funcion recibe una ruta como argumento
+    para despues abrir el archivo y deplegar la
+    informacion escrita en el
+    '''
+    ruta = Path(ruta)
+    archivo = open(ruta,'r')
+    texto_archivo = archivo.read()
+    archivo.close()
+    return print(texto_archivo)
+    
+def sobrescribir(ruta,texto):
+    '''
+    Esta funcion recibe una ruta y texto para despues
+    sobreescribir el archivo con el nuevo texto
+    '''
+    archivo = open(ruta,'w')
+    archivo.write(texto)
+    archivo.close()
+    
+def escribir(ruta,texto):
+    '''
+    Esta funcion recibe como argumentos una ruta
+    y un texto para agregarlo al archivo de interes
+    '''
+    archivo = open(ruta,'a')
+    archivo.write('\n' + texto)
+    archivo.close()
+    
+def crear_carpeta(ruta,nombre_carpeta):
+    '''
+    Esta funcion recibe una ruta y un nombre de carpeta
+    para crear una carpeta con estos datos
+    '''
+    nombre_carpeta.replace(' ','_')
+    carpeta = os.mkdir(ruta/nombre_carpeta)
+    print('Categoría creada exitosamente')
+    
+def crear_archivo(ruta,nombre_archivo):
+    '''
+    Esta funcion recibe como argumentos una ruta
+    y un nombre de archivo para crear un nuevo
+    archivo de texto
+    '''
+    nombre_archivo.replace(' ','_')
+    nombre_archivo += '.txt'
+    archivo = Path.touch(ruta/nombre_archivo)
+    print('Archivo creado exitosamente')
+
+def cambiar_carpeta(ruta):
+    '''
+    Esta funcion recibe una ruta como argumento
+    Despues cambia de directorio y la asigna a una nueva ruta
+    Por ultimo devuelve esa nueva ruta
+    '''    
+    ruta = Path(ruta)
+    #carpeta = os.chdir(ruta)
+    #print(carpeta)
+    #return carpeta
+    os.chdir(ruta)
+    return ruta
+    
+def elegir_directorio(ruta):
+    '''
+    Esta funcion tendra como proposito seleccionar
+    una categoria de la carpeta /Recetas
+    Se copio y pego de elegir_archivo()
+    '''
+    ruta = Path(ruta)
+    cuenta = 1
+    categoria = ''
+    directories = ['']
+    for dir in Path(ruta).glob('*'):
+        directories.append([dir])
+        print(f'[{cuenta}] : ',dir.stem)
+        cuenta += 1
+    while len(directories) >= 1 :
+        eleccion = int(input('Elige una categoria: '))
+        if eleccion in range(0,cuenta):
+            categoria = str(directories[eleccion])
+            categoria = categoria[14:len(categoria)-3]
+            categoria = Path(categoria)
+            os.system('cls')
+            return categoria
+        else:
+            print('No esta la opcion seleccionada')
+    return print('Ninguna categoria existente')    
+
+def elegir_archivo(ruta):
+    '''
+    Esta funcion recibe una ruta como argumento
+    Despues muestra los archivos contenidos en ese directorio
+    Despues solicita al usuario seleccionar uno
+    para despues devolverlo como un objeto Path
+    '''
+    cuenta = 1
+    ruta = Path(ruta)
+    archive = ['']
+    receta = ''
+    for txt in ruta.glob('*.txt'):
+        archive.append([txt])
+        print(f'[{cuenta}] : ',txt.stem)
+        cuenta += 1
+    while len(archive) >= 1:
+        eleccion = int(input('Elige una receta: '))
+        if eleccion in range(0,cuenta):
+            receta = str(archive[eleccion])
+            receta = receta[14:len(receta)-3]
+            receta = Path(receta)
+            os.system('cls')
+            return receta
+        else:
+            print('No esta la opcion seleccionada')
+    return print('Esta categoria está vacía')
+    
+def borrar_categoria(ruta):
+    '''
+    Esta funcion es para eliminar un directorio
+    Va recibir una ruta
+    '''
+    ruta = Path(ruta) 
+    cuenta = 0
+    for txt in ruta.glob('*.txt'):
+        cuenta += 1
+    if cuenta > 0:
+        print('No se puede eliminar la carpeta porque no está vacía.')
+    else:
+        os.rmdir(ruta)
+        print('Carpeta eliminada exitosamente')
+    
+def borrar_archivo(ruta):
+    ruta = Path(ruta)
+    os.remove(ruta)
+    print('Archivo eliminado exitosamente')
+    
+ruta = Path('C:\\Users\\FERNANDOSANCHEZGONZA\\Recetas')
+opcion = 0
+
+os.system('cls')
+print('''¡BIENVENIDO A TU RECETARIO!
+-------------------------------------------''')
+print(f'''Tus recetas se encuentran en la siguiente ruta: 
+{ruta}
+-------------------------------------------''')
+while True:
+    print('Menú de opciones:')
+    print('''
+    [1] - Leer receta
+    [2] - Editar receta
+    [3] - Crear receta
+    [4] - Crear categoría
+    [5] - Eliminar receta
+    [6] - Eliminar categoría
+    [7] - Finalizar programa
+    ''')
+    opcion = int(input('¿Qué deseas realizar? '))
+    os.system('cls')
+    match opcion:
+        case 1:
+            abrir_leer(elegir_archivo(elegir_directorio(ruta)))
+            while True:
+                print('exit para salir\n')
+                resp = input()
+                if resp == 'exit':
+                    break
+            os.system('cls')
+        case 2:
+            escribir(elegir_archivo(elegir_directorio(ruta)),input('Texto a introducir: '))
+            while True:
+                print('exit para salir\n')
+                resp = input()
+                if resp == 'exit':
+                    break
+            os.system('cls')
+        case 3:
+            crear_archivo(elegir_directorio(ruta),input('Nombre de la nueva receta: '))
+            while True:
+                print('exit para salir\n')
+                resp = input()
+                if resp == 'exit':
+                    break
+            os.system('cls')
+        case 4:
+            crear_carpeta(elegir_archivo(elegir_directorio(ruta)),input('Nombre de la categoría nueva: '))
+            while True:
+                print('exit para salir\n')
+                resp = input()
+                if resp == 'exit':
+                    break
+            os.system('cls')
+        case 5:
+            borrar_archivo(elegir_archivo(elegir_directorio(ruta)))
+            while True:
+                print('exit para salir\n')
+                resp = input()
+                if resp == 'exit':
+                    break
+            os.system('cls')
+        case 6:
+            borrar_categoria(elegir_archivo(elegir_directorio(ruta)))
+            while True:
+                print('exit para salir\n')
+                resp = input()
+                if resp == 'exit':
+                    break
+            os.system('cls')
+        case 7:
+            sys.exit()
+        case _:
+            print('Valor invalido, seleccione una opción del menú')
