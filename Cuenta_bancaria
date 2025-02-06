@@ -1,0 +1,82 @@
+#! python
+
+import os
+import sys
+
+# Crear clase Persona (nombre, apellido)
+# Crear clase Cliente (Persona, numero-cuenta, balance)
+    # imprimir_Cliente()
+    # depositar()
+    # retirar()
+# Menú: Depositar, Retirar o Salir
+# crear_cliente()
+# inicio() - control del programa
+
+class Persona:
+    nombre = ''
+    apellido = ''
+    
+class Cliente(Persona):
+    
+    numero_cuenta = 0
+    
+    def __init__(self,nombre,apellido,balance):
+        self.nombre = nombre
+        self.apellido = apellido
+        self.balance = balance
+        Cliente.numero_cuenta += 1
+    
+    def __str__(self):
+        return f'ID: {Cliente.numero_cuenta}, Cliente: {self.nombre} {self.apellido}, Balance: ${self.balance}'
+    
+    def depositar(self,cantidad):
+        self.balance += cantidad
+        print('Depósito realizado exitosamente')
+        return self.balance
+    
+    def retirar(self,cantidad):
+        self.balance -= cantidad
+        print('Retiro realizado exitosamente')
+        return self.balance
+
+def crear_cliente():
+    cliente = Cliente(input('Nombre: '),input('Apellido: '),float(input('Balance: ')))
+    print('Cuenta creada exitosamente')
+    return cliente
+
+
+def inicio():
+    opcion = 0
+    while True:
+        print('*' * 50)
+        print('Bank of Amerika FUCK YEAH')
+        print('*' * 50)
+        while opcion not in range(1,3):
+            print('Menú de opciones')
+            print('''
+            [1] Crear nueva cuenta
+            [2] Salir''')
+            opcion = int(input('Seleccione una opción: '))
+            if int(opcion) == 1:
+                os.system('cls')
+                cliente = crear_cliente()
+                print('[Press q to exit]')
+                if str(input().lower()) == 'q':
+                    elec = 0
+                    os.system('cls')
+                    print('''
+                    [1] Depositar
+                    [2] Retirar
+                    [3] Salir al menú principal''')
+                    elec = int(input('Seleccione una opción: '))
+                    match opcion:
+                        case 1:
+                            cliente.depositar(int(input('Cantidad a depositar en la cuenta: ')))
+                        case 2:
+                            cliente.retirar(int(input('Cantidad a retirar de la cuenta: ')))
+                        case 3:
+                            break
+            elif opcion == 2:
+                sys.exit()
+                
+inicio()
