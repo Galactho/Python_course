@@ -3,55 +3,74 @@
 import os
 import sys
 
-# Crear clase Persona (nombre, apellido)
-# Crear clase Cliente (Persona, numero-cuenta, balance)
-    # imprimir_Cliente()
-    # depositar()
-    # retirar()
-# Menú: Depositar, Retirar o Salir
-# crear_cliente()
-# inicio() - control del programa
-
 class Persona:
+    '''
+    Clase Persona con 2 argumentos de clase
+    '''
     nombre = ''
     apellido = ''
     
 class Cliente(Persona):
-    
-    numero_cuenta = 0
+    '''
+    Clase Cliente que hereda de la clase Persona 2
+    contiene 1 atributo de clase y 3 de instancia
+    '''
+    numero_cuenta = 0   # Atributo de clase que lleva la cuenta de objetos creados de la clase y asignar valor unico
     
     def __init__(self,nombre,apellido,balance):
+        '''
+        Metodo constructor de la clase Cliente
+        '''
         self.nombre = nombre
         self.apellido = apellido
         self.balance = balance
-        Cliente.numero_cuenta += 1
+        Cliente.numero_cuenta += 1  # Se inicializa el atributo de clase cada que se llama el constructor
     
     def __str__(self):
+        '''
+        Metodo especial que sobreescribe el metodo str
+        '''
         return f'ID: {Cliente.numero_cuenta}, Cliente: {self.nombre} {self.apellido}, Balance: ${self.balance}'
     
     def depositar(self,cantidad):
+        '''
+        Metodo para depositar la cantidad ingresa al balance del cliente
+        '''
         self.balance += cantidad
-        print('Depósito realizado exitosamente')
+        print('¡Depósito realizado exitosamente!')
         return self.balance
     
     def retirar(self,cantidad):
-        self.balance -= cantidad
-        print('Retiro realizado exitosamente')
+        '''
+        Metodo para retirar la cantidad ingresada si el balance es mayor
+        '''
+        if cantidad <= self.balance:
+            self.balance -= cantidad
+            print('¡Retiro realizado exitosamente!')
+        elif cantidad > self.balance:
+            print('¡No cuentas con el saldo suficiente para realizar el retiro!')
         return self.balance
 
 def crear_cliente():
+    '''
+    Metodo para crear un objeto de la clase Cliente
+    '''
     cliente = Cliente(input('Nombre: '),input('Apellido: '),float(input('Balance: ')))
     print('Cuenta creada exitosamente')
     return cliente
 
-
 def inicio():
+    '''
+    Metodo inicio que controla el programa
+    '''
+    os.system('cls')
     opcion = 0
     while True:
-        print('*' * 50)
-        print('Bank of Amerika FUCK YEAH')
-        print('*' * 50)
-        while opcion not in range(1,3):
+        print('*' * 51)
+        print('*' * 12 + ' Bank of Amerika FUCK YEAH ' + '*' * 12)
+        print('*' * 51)
+        while True:
+            #opcion not in range(1,3)
             print('Menú de opciones')
             print('''
             [1] Crear nueva cuenta
@@ -60,23 +79,55 @@ def inicio():
             if int(opcion) == 1:
                 os.system('cls')
                 cliente = crear_cliente()
-                print('[Press q to exit]')
-                if str(input().lower()) == 'q':
-                    elec = 0
-                    os.system('cls')
+                #print('[Press q to exit]')
+                #if str(input().lower()) == 'q':
+                #    elec = 0
+                os.system('cls')
+                elec = 0
+                while True:
+                    #elec != range(1,4)
+                    print('Operaciones en la cuenta')
                     print('''
-                    [1] Depositar
-                    [2] Retirar
-                    [3] Salir al menú principal''')
+            [1] Depositar
+            [2] Retirar
+            [3] Información de la cuenta
+            [4] Salir al menú principal''')
                     elec = int(input('Seleccione una opción: '))
-                    match opcion:
+                    match elec:
                         case 1:
+                            os.system('cls')
                             cliente.depositar(int(input('Cantidad a depositar en la cuenta: ')))
+                            print(f'Saldo actual: ${cliente.balance}')
+                            print('Press q to exit')
+                            while input().lower() != 'q':
+                                print('Invalid command')
+                                print('Press q to exit')
+                            os.system('cls')
+                            continue
                         case 2:
+                            os.system('cls')
+                            print(f'Usted cuenta con ${cliente.balance} en su cuenta')
                             cliente.retirar(int(input('Cantidad a retirar de la cuenta: ')))
+                            print(f'Saldo actual: ${cliente.balance}')                            
+                            print('Press q to exit')
+                            while input().lower() != 'q':
+                                print('Invalid command')
+                                print('Press q to exit')
+                            os.system('cls')
+                            continue
                         case 3:
+                            os.system('cls')
+                            print(cliente)
+                            print('Press q to exit')
+                            while input().lower() != 'q':
+                                print('Invalid command')
+                                print('Press q to exit')
+                            os.system('cls')
+                            continue
+                        case 4:
+                            os.system('cls')
                             break
             elif opcion == 2:
                 sys.exit()
                 
-inicio()
+inicio()    #Llamado al metodo inicio para ejecutar el programa
