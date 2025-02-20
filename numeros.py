@@ -1,58 +1,37 @@
-#! python
-
-'''
-Este modulo hará todas las operaciones necesarias para dar turnos en la farmacia
-'''
-
-def decorador(funcion):
-    def wrapper(departamento):
-        print('Su turno es:')
-        turno = funcion(departamento)
-        print(next(turno))
-        print('Porfavor, espere hasta que le llamen')
-    return wrapper
-
-@decorador
-def seleccionar_turno(departamento):
+def turno_perfumeria():
     '''
-    Este metodo contiene los 3 metodos que generan un turno para cada departamento
+    Este metodo dara un turno para el departamento de perfumeria
     '''
-            
-    def turno_perfumeria():
-        '''
-        Este metodo dara un turno para el departamento de perfumeria
-        '''
-        x = 0
-        while True:
-            x += 1
-            yield f'P - {x}'
-  
-    def turno_farmacia():
-        '''
-        Este metodo da un turno para el departamento de farmacia
-        '''
-        x = 0
-        while True:
-            x += 1
-            yield f'F - {x}'
-        
-    def turno_cosmeticos():
-        '''
-        Este metodo da un turno para el departamento de cosmeticos
-        '''
-        x = 0
-        while True:
-            x += 1
-            yield f'C - {x}'
-    
+    for n in range(1,100):
+        yield f'P - {n}'
+
+def turno_farmacia():
+    '''
+    Este metodo dara un turno para el departamento de farmacia
+    '''
+    for n in range(1,100):
+        yield f'F - {n}'
+
+def turno_cosmeticos():
+    '''
+    Este metodo dara un turno para el departamento de cosmeticos
+    '''
+    for n in range(1,100):
+        yield f'C - {n}'
+
+p = turno_perfumeria()
+f = turno_farmacia()
+c = turno_cosmeticos()
+
+def decorador(departamento):
+    print('*' * 20)
+    print('Su turno es:')
     match departamento:
-        case 'Perfumeria':
-            return turno_perfumeria()
-        case 'Farmacia':
-            return turno_farmacia()
-        case 'Cosmeticos':
-            return turno_cosmeticos()
-
-
-seleccionar_turno('Perfumeria')
-decorador(seleccionar_turno('Perfumeria'))
+        case 'P':
+            print(next(p))
+        case 'F':
+            print(next(f))
+        case 'C':
+            print(next(c))
+    print('Porfavor, espere hasta que le llamen')
+    print('*' * 20)
